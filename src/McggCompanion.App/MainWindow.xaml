@@ -1,0 +1,43 @@
+﻿<Window x:Class="McggCompanion.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:McggCompanion.App"
+        mc:Ignorable="d"
+        Title="MCGG Companion — Pengembangan"
+        Width="820" Height="560" MinWidth="680" MinHeight="480"
+        WindowStartupLocation="CenterScreen" Background="#F3F5F8"
+        FontFamily="Segoe UI" Language="id-ID">
+    <Grid Margin="32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Text="MCGG Companion" FontSize="28" FontWeight="SemiBold" Foreground="#162238" />
+            <TextBlock Text="Fondasi pengembangan · S00" Margin="0,6,0,0" Foreground="#56657B" />
+        </StackPanel>
+        <Border Grid.Row="1" Margin="0,24,0,20" Padding="20" Background="White" CornerRadius="10">
+            <StackPanel>
+                <TextBlock Text="Lingkungan pengembangan" FontSize="17" FontWeight="SemiBold" />
+                <TextBlock Text="{Binding FrameworkVersion}" Margin="0,12,0,0" />
+                <TextBlock Text="{Binding SystemDescription}" Margin="0,6,0,0" TextWrapping="Wrap" />
+                <TextBlock Margin="0,12,0,0">
+                    <Run Text="OpenCV: " /><Run Text="{Binding OpenCvVersion, Mode=OneWay}" />
+                </TextBlock>
+                <TextBlock Text="{Binding CaptureSupport}" Margin="0,6,0,0" TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
+        <StackPanel Grid.Row="2">
+            <TextBlock Text="{Binding Status}" TextWrapping="Wrap" FontSize="14" Foreground="#263C58" />
+            <TextBlock Margin="0,12,0,0" TextWrapping="Wrap" Foreground="#56657B"
+                       Text="Tahap berikutnya: memilih jendela MCGG dan memeriksa gambar shop. Pemeriksaan ini hanya memakai gambar sintetis." />
+        </StackPanel>
+        <Button Grid.Row="3" Content="Periksa dependensi" Command="{Binding CheckEnvironmentCommand}"
+                HorizontalAlignment="Left" Padding="20,10" Margin="0,16,0,0"
+                AutomationProperties.Name="Periksa dependensi pengembangan" />
+    </Grid>
+</Window>

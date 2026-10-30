@@ -1,0 +1,32 @@
+# Build and local development output
+**/bin/
+**/obj/
+**/TestResults/
+artifacts/
+.tools/
+.vs/
+.idea/
+*.user
+*.suo
+*.log
+
+# Local game data and diagnostics
+data/
+datasets/
+captures/
+recordings/
+logs/
+*.dmp
+
+# Credentials and machine-specific settings
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+*.key
+NuGet.Config.user
+
+# OS files
+Thumbs.db
+.DS_Store

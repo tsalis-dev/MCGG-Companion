@@ -15,7 +15,7 @@ Pilihan teknologi tidak berarti kompatibilitas dengan MCGG telah terbukti. Fase 
 | Pola antarmuka | MVVM dengan CommunityToolkit.Mvvm | Ditetapkan | Pisahkan tampilan, status UI, dan aturan pembelian agar dapat diuji |
 | Pengambilan gambar | Windows.Graphics.Capture | Pilihan awal; perlu uji integrasi | Harus menghasilkan gambar shop yang benar dan stabil pada mode layar pengguna |
 | Penghubung grafis | Interop WinRT / Direct3D 11 dari C# | Pilihan awal; detail pustaka ditentukan pada fase 0 | Menyiapkan device, frame pool, dan akses piksel; ukur konversi dan salinan gambar |
-| Pengenalan gambar | OpenCV melalui OpenCvSharp5 untuk Windows x64 | Pilihan awal; paket dikunci setelah uji build dan runtime | Uji pemuatan DLL, pembacaan gambar, pencocokan target, dan pengelolaan memori |
+| Pengenalan gambar | OpenCV melalui OpenCvSharp5 untuk Windows x64 | Ditetapkan; runtime dan gambar sintetis lulus uji S00 | Deteksi hero nyata dan kualitasnya tetap diuji pada S03 |
 | Pembacaan gold dan harga | Pemrosesan gambar serta pencocokan digit | Baseline eksperimen | Evaluasi pada font, skala, dan variasi angka dari game asli |
 | OCR umum | Kandidat tambahan jika baseline angka gagal | Opsional | Pilih mesin setelah membandingkan akurasi, latency, dan kebutuhan distribusinya |
 | Pengiriman klik | Win32 SendInput melalui interop C# | Pilihan awal; perlu uji integrasi | Validasi koordinat, fokus, penerimaan input, dan hasil di game |
@@ -27,7 +27,7 @@ Pilihan teknologi tidak berarti kompatibilitas dengan MCGG telah terbukti. Fase 
 | Simulator | Aplikasi WPF terpisah yang memakai inti keputusan yang sama | Ditetapkan | Menguji transaksi dan kegagalan dengan hasil sebenarnya yang diketahui |
 | Distribusi awal | Publish self-contained win-x64 dalam folder / ZIP | Ditetapkan untuk pilot x64 | Sertakan runtime .NET, DLL native, dan aset; lakukan uji pada lingkungan bersih |
 
-Versi library yang tepat ditulis dalam berkas dependensi saat implementasi. Tidak ada dependensi yang diunduh atau dipasang hanya dengan penulisan dokumen ini.
+Versi paket tercatat pada `Directory.Packages.props`, dan hasil resolusinya dikunci dalam `packages.lock.json` pada setiap proyek. Dependensi fondasi telah diunduh dan diverifikasi pada S00: CommunityToolkit.Mvvm 8.4.2, OpenCvSharp5.Windows 5.0.0.20261018, xUnit 2.9.3, Microsoft.NET.Test.Sdk 17.14.1, dan xunit.runner.visualstudio 3.1.4.
 
 ## 2. Alasan pemilihan
 
@@ -45,7 +45,7 @@ Tampilan utama menggunakan bahasa pengguna seperti “Target ditemukan” dan �
 
 Kebutuhan awal mencakup pemotongan area shop, pengolahan warna, pencocokan gambar, serta pengenalan angka pada tampilan yang dikalibrasi. OpenCvSharp menyediakan akses OpenCV dari C#.
 
-Dokumentasi pengelola saat ini merekomendasikan keluarga OpenCvSharp5 untuk proyek baru. Paket Windows yang terverifikasi tersedia saat penulisan adalah **OpenCvSharp5.Windows 5.0.0.20261018**. Versi tersebut menjadi kandidat baseline dan baru dikunci setelah uji pemuatan runtime, pengolahan gambar, serta publish x64 berhasil. Paket managed, runtime native, namespace, dan contoh API harus berasal dari keluarga yang sama.
+Dokumentasi pengelola saat ini merekomendasikan keluarga OpenCvSharp5 untuk proyek baru. **OpenCvSharp5.Windows 5.0.0.20261018** telah diunduh, dikunci, dan lulus uji pemuatan runtime, pencocokan gambar sintetis, PNG roundtrip, serta publish x64. Paket managed, runtime native, namespace, dan contoh API harus berasal dari keluarga yang sama.
 
 Hero pilot dan metode pengenalannya ditentukan dari screenshot nyata. Pencocokan gambar adalah baseline; model machine learning hanya ditambahkan bila evaluasi menunjukkan kebutuhan yang jelas.
 
@@ -72,7 +72,7 @@ Jika backend capture atau input awal gagal pada MCGG, simpan hasil investigasi d
 
 ## 4. Struktur kode yang direncanakan
 
-Struktur berikut adalah rencana; folder implementasi belum dibuat.
+Struktur berikut adalah arah pengembangan. App, Vision, dan Vision.Tests telah dibuat pada S00; proyek lain ditambahkan ketika section terkait membutuhkannya.
 
 ```text
 Agent-MCGG/
