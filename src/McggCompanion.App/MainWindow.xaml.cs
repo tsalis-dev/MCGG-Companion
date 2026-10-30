@@ -44,6 +44,11 @@ public partial class MainWindow : Window
             return;
         }
 
+        if (!viewModel.TryCloseCalibration())
+        {
+            return;
+        }
+
         cleanupStarted = true;
         await viewModel.DisposeAsync();
         cleanupFinished = true;

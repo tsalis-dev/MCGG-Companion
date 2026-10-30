@@ -20,7 +20,7 @@ Pilihan teknologi tidak berarti seluruh konfigurasi MCGG didukung. [S01](S01_CAP
 | OCR umum | Kandidat tambahan jika baseline angka gagal | Opsional | Pilih mesin setelah membandingkan akurasi, latency, dan kebutuhan distribusinya |
 | Pengiriman klik | Win32 SendInput melalui interop C# | Pilihan awal; perlu uji integrasi | Validasi koordinat, fokus, penerimaan input, dan hasil di game |
 | Pintasan berhenti | Win32 RegisterHotKey | Pilihan awal; perlu uji konflik | Harus dapat menjeda saat game fokus; tampilkan konflik pendaftaran pintasan |
-| Pengaturan dan profil | JSON dengan System.Text.Json | S01: profil metadata lokal tersedia | Target, batas pembelian, dan referensi kalibrasi mengikuti section berikutnya |
+| Pengaturan dan profil | JSON dengan System.Text.Json | S01: metadata capture; S02: manifest sesi, area dan label manual | Kalibrasi shop nyata dan referensi Uranus belum tervalidasi; batas pembelian mengikuti section berikutnya |
 | Catatan transaksi | JSON Lines / JSONL | Ditetapkan | Satu kejadian per baris untuk evaluasi serta pemeriksaan hasil |
 | Data gambar | PNG untuk referensi dan screenshot berlabel | Ditetapkan | Bukti visual dan pengujian detektor yang dapat diulang |
 | Pengujian logika | xUnit, rilis stabil | Ditetapkan | Uji aturan gold, kuota, keadaan transaksi, pembatalan, dan timeout |

@@ -22,6 +22,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <DockPanel>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
@@ -33,7 +34,7 @@
             </StackPanel>
             <StackPanel>
                 <TextBlock Text="MCGG Companion" FontSize="26" FontWeight="SemiBold" Foreground="#162238" />
-                <TextBlock Text="S01 · Pratinjau jendela" Margin="0,4,0,0" Foreground="#56657B" />
+                <TextBlock Text="S02 · Persiapan kalibrasi Uranus" Margin="0,4,0,0" Foreground="#56657B" />
             </StackPanel>
         </DockPanel>
         <Border Grid.Row="1" Margin="0,18,0,12" Padding="14,10" Background="White" CornerRadius="8">
@@ -54,9 +55,17 @@
             <TextBlock Text="{Binding FrameFreshness}" DockPanel.Dock="Right" Foreground="#56657B" />
             <TextBlock Text="{Binding FrameDimensions}" Foreground="#56657B" />
         </DockPanel>
-        <StackPanel Grid.Row="4">
-            <TextBlock Text="Pilih jendela MCGG pada pemilih Windows. Lobby cukup untuk menguji pratinjau."
-                       TextWrapping="Wrap" Foreground="#56657B" Margin="0,0,0,10" />
+        <StackPanel Grid.Row="4" Margin="0,0,0,12">
+            <WrapPanel>
+                <Button Content="Bekukan untuk kalibrasi" Command="{Binding FreezeForCalibrationCommand}"
+                        AutomationProperties.AutomationId="FreezeForCalibration" />
+                <Button Content="Kalibrasi dari PNG" Command="{Binding OpenCalibrationImageCommand}"
+                        AutomationProperties.AutomationId="OpenCalibrationImage" />
+            </WrapPanel>
+            <TextBlock Text="Ambil gambar saat shop terlihat, atau buka PNG setelah bermain. Membekukan gambar tidak menghentikan permainan."
+                       TextWrapping="Wrap" Foreground="#56657B" Margin="0,8,0,0" />
+        </StackPanel>
+        <StackPanel Grid.Row="5">
             <Expander Header="Detail pengujian dan profil" AutomationProperties.AutomationId="CaptureDiagnostics">
                 <ScrollViewer MaxHeight="250" VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="0,12,0,0">
