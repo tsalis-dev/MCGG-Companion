@@ -8,13 +8,15 @@ Inventaris pada 30 Oktober 2026: Windows build `10.0.26200`, CPU x64, SDK .NET `
 
 Fondasi memakai C# / .NET 10, WPF + MVVM, serta OpenCvSharp5 Windows x64. Versi SDK berada di `global.json`, versi paket terpusat pada `Directory.Packages.props`, dan lockfile berada pada setiap proyek. Gunakan patch yang didukung dan perbarui versi secara sengaja beserta hasil verifikasinya.
 
-Struktur awal sengaja hanya mencakup:
+Struktur yang sudah digunakan:
 
 - `src/McggCompanion.App`: aplikasi WPF dan pemeriksaan lingkungan awal.
 - `src/McggCompanion.Vision`: pemrosesan gambar yang sudah dibutuhkan.
+- `src/McggCompanion.Windows`: integrasi capture dan antrean pesan Windows pada S01.
 - `tests/McggCompanion.Vision.Tests`: pengujian gambar dan pemuatan runtime native.
+- `tests/McggCompanion.Windows.Tests`: fixture capture desktop sintetis yang dijalankan secara eksplisit.
 
-Core, integrasi Windows, dan simulator ditambahkan ketika hasil section memerlukannya. Daftar komponen pada Tech Stack merupakan arah pengembangan, bukan kewajiban membuat proyek kosong saat setup.
+Core dan simulator ditambahkan ketika hasil section memerlukannya. Daftar komponen pada Tech Stack merupakan arah pengembangan, bukan kewajiban membuat proyek kosong saat setup.
 
 ## 2. Perintah pengembangan
 
@@ -46,14 +48,16 @@ Pada penambahan atau perubahan dependensi yang disengaja, jalankan `dotnet resto
 
 Publish menghasilkan folder `artifacts/publish/win-x64`. Build dan publish membuktikan paket dapat dibuat; dukungan game tetap membutuhkan pengujian section terkait. CI Windows memanggil script verifikasi yang sama. Upload atau rilis paket publik dikerjakan pada S07 setelah penyertaan lisensi/notices dependensi dan pengujian paket distribusi selesai.
 
+Tes Windows desktop secara default di-skip pada discovery xUnit. Menjalankannya memerlukan sesi Windows interaktif dan `MCGG_DESKTOP_TESTS=1`; lihat [perintah dan hasil S01](S01_CAPTURE.md). Skip tidak dihitung sebagai keberhasilan capture.
+
 ## 3. Section pengerjaan
 
-S00 **selesai**, dengan verifikasi lokal serta CI GitHub telah lulus pada 30 Oktober 2026. Capture dan input MCGG asli belum diuji.
+S00 **selesai**, dengan verifikasi lokal serta CI GitHub telah lulus pada 30 Oktober 2026. S01 telah memvalidasi implementasi capture dan profil lobby MCGG pada satu konfigurasi; profil shop serta perluasan konfigurasi belum tervalidasi. Input game belum diuji.
 
 | Section | Status | Output | Gate sebelum dinyatakan selesai | Contoh commit logis |
 | --- | --- | --- | --- | --- |
 | S00 — Fondasi | Selesai | Solution App/Vision/Vision.Tests, dependensi, lockfile, UI awal, script verifikasi, CI, dan skill lokal | Restore terkunci, build Release, pengujian native/gambar, publish x64, dan pembukaan UI awal lulus | `chore: bootstrap Windows development environment and Ponytail skills` |
-| S01 — Probe capture | Belum dimulai | Pemilih jendela, pratinjau gambar MCGG, timestamp, dan profil PC/game | Capture nyata dapat digunakan; resize, penghentian, dan pelepasan sumber daya diuji; jalur input dan bukti hasil memiliki rencana validasi | `feat(capture): preview the selected game window` |
+| S01 — Probe capture | Implementasi + lobby tervalidasi; perluasan profil belum | Pemilih jendela, pratinjau, timestamp, profil metadata lokal, dan fixture desktop | Capture lobby serta kontrol UI lulus; resize/close lulus pada fixture; pengujian shop dan variasi game tetap terbuka sesuai matriks [S01](S01_CAPTURE.md) | `feat(capture): preview Windows sources and validate session lifecycle` |
 | S02 — Kalibrasi dan data | Belum dimulai | Area shop, referensi satu hero, label, pemetaan indikator hasil, dan pembagian dataset | Profil koordinat benar; data dipisah per sesi; kondisi yang belum didukung tercatat | `feat(calibration): define the pilot shop profile` |
 | S03 — Deteksi offline | Belum dimulai | Pengenalan target, harga, gold, keadaan tidak terbaca, dan evaluasi | Precision ≥99% dan recall ≥95% pada data uji terpisah; jumlah sampel dan abstain dilaporkan | `feat(vision): detect the pilot hero and shop values` |
 | S04 — Mode Pantau | Belum dimulai | UI target/sesi, deteksi langsung, jeda, pintasan berhenti, dan catatan lokal | p95 keputusan ≤250 ms pada profil uji; ≥3 sesi masing-masing ≥20 menit; perubahan fokus/tampilan dan capture putus tertangani | `feat(monitor): observe the live shop` |
@@ -71,8 +75,9 @@ Pengendali auto-buy pada simulator memakai logika produk yang sama, sedangkan ke
 2. Implementasikan bagian terkecil yang menyelesaikan hasil tersebut, termasuk pemanggil, konfigurasi, dan pengujian yang terdampak.
 3. Jalankan pemeriksaan relevan. Untuk fondasi atau dependensi, jalankan verifikasi lengkap; untuk integrasi game, tambahkan pemeriksaan nyata sesuai gate.
 4. Tinjau diff dan berkas staging. Pastikan tidak ada data akun, rahasia, data mentah pribadi, atau keluaran build.
-5. Commit perubahan logis yang telah diperiksa, lalu push ke branch kerja yang disepakati pada `tsalis-dev/MCGG-Companion`.
-6. Catat bukti dan keterbatasan. Jika pemeriksaan atau push gagal, perbaiki atau laporkan keadaan sebenarnya; jangan menandai section selesai.
+5. Commit perubahan logis yang telah diperiksa, lalu push ke branch fitur pada `tsalis-dev/MCGG-Companion`. S01 menggunakan `codex/s01-window-capture`; buka atau perbarui pull request ke `main`.
+6. Tinjau hasil CI dan review sebelum integrasi PR ke `main`. Jalur pengerjaan saat ini tidak memakai push langsung ke `main`.
+7. Catat bukti dan keterbatasan. Jika pemeriksaan atau push gagal, perbaiki atau laporkan keadaan sebenarnya; jangan menandai section selesai.
 
 Otorisasi commit dan push sudah diberikan pengguna. Satu section dapat memerlukan beberapa commit yang bermakna. Perubahan kode tidak menunggu hingga seluruh MVP selesai untuk disinkronkan.
 
@@ -97,7 +102,9 @@ Riwayat setup yang sudah dikirim ke GitHub:
 2. [`e229dcc`](https://github.com/tsalis-dev/MCGG-Companion/commit/e229dcc): fondasi kode, dependensi terkunci, skill Ponytail, dan section pengembangan.
 3. [`e7cec2d`](https://github.com/tsalis-dev/MCGG-Companion/commit/e7cec2d): workflow CI Windows; pemeriksaan pertama lulus.
 
-Workflow berjalan pada push kode ke `main` dan pull request. Perubahan Markdown atau skill instruksi saja tidak mengulang build. Verifikasi runtime sintetis dan startup tidak menggantikan uji capture, penerimaan klik, atau pembelian di MCGG asli. Pemeriksaan tampilan visual dan distribusi pada PC bersih masih mengikuti section terkait.
+Workflow berjalan pada push kode ke `main`, branch `codex/**`, dan pull request. Perubahan Markdown atau skill instruksi saja tidak mengulang build. Verifikasi runtime sintetis dan startup tidak menggantikan uji capture, penerimaan klik, atau pembelian di MCGG asli. Pemeriksaan tampilan visual dan distribusi pada PC bersih masih mengikuti section terkait.
+
+Hasil S01 dicatat terpisah pada [S01 Capture](S01_CAPTURE.md): verifikasi lokal lulus 0 warning/0 error, dua tes Vision lulus, satu tes desktop dilewati pada jalur default, dan tes desktop eksplisit lulus. Kode [`9b9850b`](https://github.com/tsalis-dev/MCGG-Companion/commit/9b9850b431255080a12510ea796377b25323f889) telah dikirim ke branch fitur. Branch S01 belum digabung ke main; hasil CI branch sedang diverifikasi. Bukti CI S00 di atas tidak menggantikannya.
 
 ## 6. Pemeriksaan masalah awal
 

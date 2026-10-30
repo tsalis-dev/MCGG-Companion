@@ -6,21 +6,21 @@ Tanggal keputusan: 30 Oktober 2026. Acuan kebutuhan: [PRD](PRD.md).
 
 Dasar aplikasi adalah **C# + .NET 10 LTS + WPF**, dengan pemrosesan gambar melalui **OpenCV / OpenCvSharp** dan integrasi jendela serta input melalui API Windows. Pemrosesan, konfigurasi, dan catatan kejadian berjalan lokal.
 
-Pilihan teknologi tidak berarti kompatibilitas dengan MCGG telah terbukti. Fase 0 PRD menguji capture, koordinat, input, dan indikator hasil pada aplikasi MCGG Windows yang digunakan.
+Pilihan teknologi tidak berarti seluruh konfigurasi MCGG didukung. [S01](S01_CAPTURE.md) telah memvalidasi capture lobby pada satu konfigurasi Windows serta lifecycle pada fixture sintetis. Capture shop, koordinat tindakan, input, dan indikator pembelian masih mengikuti fase PRD.
 
 | Komponen | Pilihan | Status | Tujuan / bukti sebelum dipakai |
 | --- | --- | --- | --- |
 | Bahasa dan runtime | C# pada .NET 10 LTS | Ditetapkan | Fondasi aplikasi dan logika transaksi; gunakan rilis stabil serta patch yang masih didukung |
 | Antarmuka desktop | WPF + XAML | Ditetapkan | Pemilihan jendela, target, pratinjau, status, dan kontrol sesi |
 | Pola antarmuka | MVVM dengan CommunityToolkit.Mvvm | Ditetapkan | Pisahkan tampilan, status UI, dan aturan pembelian agar dapat diuji |
-| Pengambilan gambar | Windows.Graphics.Capture | Pilihan awal; perlu uji integrasi | Harus menghasilkan gambar shop yang benar dan stabil pada mode layar pengguna |
-| Penghubung grafis | Interop WinRT / Direct3D 11 dari C# | Pilihan awal; detail pustaka ditentukan pada fase 0 | Menyiapkan device, frame pool, dan akses piksel; ukur konversi dan salinan gambar |
+| Pengambilan gambar | Windows.Graphics.Capture | S01: fixture dan satu profil lobby lulus | Capture shop serta variasi mode layar masih perlu diuji |
+| Penghubung grafis | Interop WinRT / Direct3D 11 dan SoftwareBitmap | Diimplementasikan pada S01 | Membuat device; menyalin surface ke BGRA milik aplikasi; slot menyimpan frame terbaru |
 | Pengenalan gambar | OpenCV melalui OpenCvSharp5 untuk Windows x64 | Ditetapkan; runtime dan gambar sintetis lulus uji S00 | Deteksi hero nyata dan kualitasnya tetap diuji pada S03 |
 | Pembacaan gold dan harga | Pemrosesan gambar serta pencocokan digit | Baseline eksperimen | Evaluasi pada font, skala, dan variasi angka dari game asli |
 | OCR umum | Kandidat tambahan jika baseline angka gagal | Opsional | Pilih mesin setelah membandingkan akurasi, latency, dan kebutuhan distribusinya |
 | Pengiriman klik | Win32 SendInput melalui interop C# | Pilihan awal; perlu uji integrasi | Validasi koordinat, fokus, penerimaan input, dan hasil di game |
 | Pintasan berhenti | Win32 RegisterHotKey | Pilihan awal; perlu uji konflik | Harus dapat menjeda saat game fokus; tampilkan konflik pendaftaran pintasan |
-| Pengaturan dan profil | JSON dengan System.Text.Json | Ditetapkan | Simpan target, batas pembelian, referensi, dan versi kalibrasi |
+| Pengaturan dan profil | JSON dengan System.Text.Json | S01: profil metadata lokal tersedia | Target, batas pembelian, dan referensi kalibrasi mengikuti section berikutnya |
 | Catatan transaksi | JSON Lines / JSONL | Ditetapkan | Satu kejadian per baris untuk evaluasi serta pemeriksaan hasil |
 | Data gambar | PNG untuk referensi dan screenshot berlabel | Ditetapkan | Bukti visual dan pengujian detektor yang dapat diulang |
 | Pengujian logika | xUnit, rilis stabil | Ditetapkan | Uji aturan gold, kuota, keadaan transaksi, pembatalan, dan timeout |
@@ -58,6 +58,8 @@ Jika hasilnya tidak memenuhi PRD, bandingkan mesin OCR pada data yang sama. Pena
 ## 3. Aturan integrasi Windows
 
 - Pengguna memilih jendela melalui pemilih capture Windows. Dukungan capture diperiksa saat berjalan.
+- S01 menggunakan pool free-threaded dengan dua buffer dan polling sekitar 30 kali per detik. `SoftwareBitmap` disalin menjadi `byte[]` BGRA premultiplied yang dimiliki aplikasi. UI mengambil slot frame terbaru setiap 100 ms untuk memperbarui `WriteableBitmap`; ini bukan target FPS game.
+- `GraphicsCaptureItem.Closed` memerlukan antrean pesan pada thread pembuat item. Companion memastikan DispatcherQueue tersedia sebelum membuka picker melalui helper CoreMessaging dan menghentikan queue miliknya setelah capture selesai. Fixture membuat item pada dedicated DispatcherQueue yang hidup sampai sesi dibersihkan.
 - Proyek desktop menggunakan target framework dengan versi API Windows yang sesuai. Versi Windows minimum dan daftar OS yang didukung ditentukan pada fase 0.
 - Frame capture dan sumber daya Direct3D memiliki masa hidup yang terbatas. Salin data yang diperlukan sebelum frame dikembalikan; lepaskan frame, tekstur, dan objek gambar setelah digunakan.
 - Pemrosesan gambar dilakukan di luar jalur pembaruan UI. Gunakan gambar terbaru dan buang antrean gambar lama.
@@ -72,7 +74,7 @@ Jika backend capture atau input awal gagal pada MCGG, simpan hasil investigasi d
 
 ## 4. Struktur kode yang direncanakan
 
-Struktur berikut adalah arah pengembangan. App, Vision, dan Vision.Tests telah dibuat pada S00; proyek lain ditambahkan ketika section terkait membutuhkannya.
+Struktur berikut sudah digunakan pada S01. Core dan simulator ditambahkan saat section berikutnya memerlukannya.
 
 ```text
 Agent-MCGG/
@@ -80,17 +82,14 @@ Agent-MCGG/
   docs/
     PRD.md
     TECH_STACK.md
+    S01_CAPTURE.md
   src/
     McggCompanion.App/         # UI WPF dan konfigurasi sesi
-    McggCompanion.Core/        # Keadaan transaksi dan aturan pembelian
-    McggCompanion.Windows/     # Capture, jendela, input, dan pintasan
+    McggCompanion.Windows/     # Capture dan antrean pesan Windows
     McggCompanion.Vision/      # Pengenalan hero, angka, dan indikator hasil
-    McggCompanion.Simulator/   # Shop pengujian dengan hasil yang diketahui
   tests/
-    McggCompanion.Core.Tests/
     McggCompanion.Vision.Tests/
-  assets/
-    references/               # Referensi yang sudah dikalibrasi
+    McggCompanion.Windows.Tests/
 ```
 
 Core dapat mengonsumsi observasi gambar dan menghasilkan keputusan tanpa bergantung pada WPF atau input Windows. Sumber gambar langsung, rekaman, dan simulator mengirim format observasi yang sama. Pengendali simulator dan pengendali game tetap berbeda agar keberhasilan simulator tidak dianggap keberhasilan integrasi asli.
@@ -107,14 +106,14 @@ Paket pilot berupa folder hasil publish self-contained untuk Windows x64. Folder
 
 Penyimpanan MVP memakai JSON dan JSONL. Database, layanan web, dan sinkronisasi cloud belum dibutuhkan oleh alur produk saat ini.
 
-## 6. Pekerjaan teknis pertama
+## 6. Pekerjaan setelah probe capture
 
-1. Buat aplikasi percobaan kecil berbasis .NET/WPF untuk memilih jendela dan menampilkan gambar shop.
-2. Validasi jalur WinRT/Direct3D, ketepatan warna, perubahan ukuran, dan pengelolaan memori.
-3. Uji OpenCvSharp pada gambar yang diambil, kemudian tetapkan versi paket dan runtime.
-4. Ukur capture dan pemrosesan awal pada PC pengguna; catat profil uji.
-5. Petakan bukti pembelian dari game dan susun pengujian input terpisah.
-6. Lanjutkan fase deteksi offline pada roadmap PRD setelah kelayakan awal terbukti.
+1. Lengkapi versi game dan profil shop pada S02; lobby belum membuktikan keterbacaan hero, harga, atau gold.
+2. Perluas pengujian game untuk resize, minimize/restore, DPI, mode layar, dan HDR sesuai daftar dukungan yang ingin ditawarkan.
+3. Kumpulkan data untuk hero pilot dan ukur deteksi offline pada S03.
+4. Petakan indikator keberhasilan pembelian dari tampilan shop. Rencanakan SendInput pada S06 setelah transaksi simulator lulus, dengan pemeriksaan foreground, DPI, dan gambar terbaru.
+
+Metrik awal dan batas interpretasinya tersedia pada [S01 Capture](S01_CAPTURE.md). Belum ada pengiriman klik pembelian atau validasi transaksi game.
 
 ## 7. Rujukan
 
@@ -126,6 +125,9 @@ Rujukan diperiksa pada 30 Oktober 2026:
 - [Microsoft — Screen capture](https://learn.microsoft.com/en-us/windows/apps/develop/media-authoring-processing/screen-capture)
 - [Microsoft — Windows Runtime APIs dalam aplikasi desktop](https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/winrt-apis-desktop-apps)
 - [Microsoft — SendInput](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-sendinput)
+- [Microsoft — CreateDispatcherQueueController / CoreMessaging](https://learn.microsoft.com/en-us/windows/win32/api/dispatcherqueue/nf-dispatcherqueue-createdispatcherqueuecontroller)
+- [Microsoft — QPC dan Stopwatch](https://learn.microsoft.com/en-us/windows/win32/sysinfo/acquiring-high-resolution-time-stamps)
+- [Penjelasan maintainer — thread pembuat item dan Closed](https://github.com/robmikh/Win32CaptureSample/issues/17#issuecomment-663772362)
 - [OpenCvSharp — dokumentasi pengelola](https://github.com/shimat/opencvsharp)
 - [NuGet — OpenCvSharp5.Windows](https://www.nuget.org/packages/OpenCvSharp5.Windows)
 - [xUnit — panduan penggunaan](https://xunit.net/docs/getting-started/v3/getting-started)
