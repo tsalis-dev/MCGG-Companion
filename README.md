@@ -14,7 +14,7 @@ Fondasi: C# / .NET 10, WPF + MVVM, OpenCvSharp, dan Windows Graphics Capture. In
 
 ## Menjalankan pratinjau
 
-Gunakan Windows x64 dan SDK .NET 10. Implementasi S01 tersedia pada branch `codex/s01-window-capture` sebelum integrasi ke `main`. Dari root repository:
+Gunakan Windows x64 dan SDK .NET 10. Implementasi S01 tersedia pada branch `main`. Dari root repository:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify.ps1
@@ -32,4 +32,4 @@ Verifikasi menjalankan restore terkunci, build Release, dua tes OpenCV, dan publ
 
 **S00 selesai:** fondasi lokal dan [CI GitHub S00](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/40987133392) telah lulus. **S01: implementasi dan profil lobby tervalidasi**, dengan [CI S01 lulus](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/41015101843). Fixture sintetis lulus capture, resize, stop, restart, dan penutupan sumber. Capture shop, variasi tampilan game, pengenalan hero, serta auto-buy belum tervalidasi. Rincian bukti dan batas ada pada [S01 Capture](docs/S01_CAPTURE.md).
 
-Setiap perubahan kode dikelompokkan menjadi commit yang utuh, diperiksa, lalu didorong ke branch fitur di [tsalis-dev/MCGG-Companion](https://github.com/tsalis-dev/MCGG-Companion). Integrasi ke `main` melalui pull request dan pemeriksaan CI.
+Setiap perubahan kode dikelompokkan menjadi commit yang utuh, diperiksa, lalu didorong ke branch fitur di [tsalis-dev/MCGG-Companion](https://github.com/tsalis-dev/MCGG-Companion). Integrasi berikutnya ke `main` melalui pull request dan pemeriksaan CI. S01 digabung secara fast-forward dengan izin eksplisit pengguna pada 30 Oktober 2026 setelah CI branch lulus; seluruh commit pengerjaan dipertahankan.

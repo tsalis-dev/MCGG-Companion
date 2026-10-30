@@ -2,7 +2,7 @@
 
 Tanggal: 30 Oktober 2026. Status: **implementasi dan profil lobby tervalidasi; perluasan profil belum**.
 
-Kode: [`9b9850b`](https://github.com/tsalis-dev/MCGG-Companion/commit/9b9850b431255080a12510ea796377b25323f889), branch `codex/s01-window-capture`. Branch belum digabung ke `main`; [perbandingan perubahan](https://github.com/tsalis-dev/MCGG-Companion/compare/main...codex%2Fs01-window-capture) tersedia untuk peninjauan. [CI S01 lulus pada commit 0927875](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/41015101843).
+Kode: [`9b9850b`](https://github.com/tsalis-dev/MCGG-Companion/commit/9b9850b431255080a12510ea796377b25323f889), dikembangkan pada branch `codex/s01-window-capture` dan digabung ke `main` secara fast-forward dengan izin eksplisit pengguna pada 30 Oktober 2026. Seluruh commit pengerjaan dipertahankan. [CI S01 lulus pada commit 0927875](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/41015101843).
 
 ## 1. Yang tersedia
 

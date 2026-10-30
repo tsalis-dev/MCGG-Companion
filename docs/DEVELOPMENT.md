@@ -81,6 +81,8 @@ Pengendali auto-buy pada simulator memakai logika produk yang sama, sedangkan ke
 
 Otorisasi commit dan push sudah diberikan pengguna. Satu section dapat memerlukan beberapa commit yang bermakna. Perubahan kode tidak menunggu hingga seluruh MVP selesai untuk disinkronkan.
 
+Integrasi S01 pada 30 Oktober 2026 memakai fast-forward langsung ke `main` setelah CI branch lulus dan pengguna memberikan izin eksplisit. Tidak ada PR untuk integrasi tersebut; seluruh commit pengerjaan dipertahankan. Siklus PR di atas tetap berlaku untuk pengerjaan berikutnya.
+
 ## 5. Data dan bukti pemeriksaan
 
 Gunakan fixture sintetis untuk pengujian awal. Data sesi, rekaman MCGG, screenshot pribadi, serta catatan dengan identitas akun disimpan di luar berkas yang dilacak Git. Referensi yang akan dibagikan harus diperiksa hak penggunaan dan informasi pribadinya.
@@ -104,7 +106,7 @@ Riwayat setup yang sudah dikirim ke GitHub:
 
 Workflow berjalan pada push kode ke `main`, branch `codex/**`, dan pull request. Perubahan Markdown atau skill instruksi saja tidak mengulang build. Verifikasi runtime sintetis dan startup tidak menggantikan uji capture, penerimaan klik, atau pembelian di MCGG asli. Pemeriksaan tampilan visual dan distribusi pada PC bersih masih mengikuti section terkait.
 
-Hasil S01 dicatat terpisah pada [S01 Capture](S01_CAPTURE.md): verifikasi lokal lulus 0 warning/0 error, dua tes Vision lulus, satu tes desktop dilewati pada jalur default, dan tes desktop eksplisit lulus. Kode [`9b9850b`](https://github.com/tsalis-dev/MCGG-Companion/commit/9b9850b431255080a12510ea796377b25323f889) telah dikirim ke branch fitur. Branch S01 belum digabung ke main. [CI branch S01 lulus](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/41015101843) pada commit 0927875. Bukti tes desktop interaktif lokal dicatat terpisah dari CI.
+Hasil S01 dicatat terpisah pada [S01 Capture](S01_CAPTURE.md): verifikasi lokal lulus 0 warning/0 error, dua tes Vision lulus, satu tes desktop dilewati pada jalur default, dan tes desktop eksplisit lulus. Kode [`9b9850b`](https://github.com/tsalis-dev/MCGG-Companion/commit/9b9850b431255080a12510ea796377b25323f889) telah digabung ke `main` bersama commit CI dan dokumentasinya. [CI branch S01 lulus](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/41015101843) pada commit 0927875. Bukti tes desktop interaktif lokal dicatat terpisah dari CI.
 
 ## 6. Pemeriksaan masalah awal
 
