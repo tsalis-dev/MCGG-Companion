@@ -2,7 +2,7 @@
 
 Tanggal: 30 Oktober 2026. Status: **implementasi dan profil lobby tervalidasi; perluasan profil belum**.
 
-Kode: [`9b9850b`](https://github.com/tsalis-dev/MCGG-Companion/commit/9b9850b431255080a12510ea796377b25323f889), branch `codex/s01-window-capture`. Branch belum digabung ke `main`; [perbandingan perubahan](https://github.com/tsalis-dev/MCGG-Companion/compare/main...codex%2Fs01-window-capture) tersedia untuk peninjauan. Hasil CI S01 akan dicatat setelah pemeriksaan branch selesai.
+Kode: [`9b9850b`](https://github.com/tsalis-dev/MCGG-Companion/commit/9b9850b431255080a12510ea796377b25323f889), branch `codex/s01-window-capture`. Branch belum digabung ke `main`; [perbandingan perubahan](https://github.com/tsalis-dev/MCGG-Companion/compare/main...codex%2Fs01-window-capture) tersedia untuk peninjauan. [CI S01 lulus pada commit 0927875](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/41015101843).
 
 ## 1. Yang tersedia
 
@@ -33,6 +33,7 @@ UI menunjukkan sekitar **27,2–27,4 frame tersalin per detik** pada sesi yang d
 | --- | --- | --- |
 | Restore terkunci, build Release, publish x64 | Lulus; 0 warning dan 0 error | Verifikasi lokal terbaru |
 | Dua tes Vision | Lulus | Runtime OpenCV dan gambar sintetis |
+| CI branch S01 | Lulus: restore, build, tes, dan publish | Runner Windows GitHub; tes desktop eksplisit tetap dibuktikan terpisah di PC lokal |
 | Tes desktop pada jalur default | Dilewati secara eksplisit | Tidak dihitung sebagai capture lulus |
 | Fixture desktop eksplisit | Lulus; sekitar 12 detik tes, 14,37 detik total | Windows interaktif lokal |
 | BGRA dan resize | Biru 321 × 241 → merah 481 × 321; warna dan layout benar | Fixture sintetis |

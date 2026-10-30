@@ -30,6 +30,6 @@ Verifikasi menjalankan restore terkunci, build Release, dua tes OpenCV, dan publ
 
 ## Status
 
-**S00 selesai:** fondasi lokal dan [CI GitHub S00](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/40987133392) telah lulus. **S01: implementasi dan profil lobby tervalidasi** pada satu konfigurasi Windows; fixture sintetis lulus capture, resize, stop, restart, dan penutupan sumber. Capture shop, variasi tampilan game, pengenalan hero, serta auto-buy belum tervalidasi. Rincian bukti dan batas ada pada [S01 Capture](docs/S01_CAPTURE.md).
+**S00 selesai:** fondasi lokal dan [CI GitHub S00](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/40987133392) telah lulus. **S01: implementasi dan profil lobby tervalidasi**, dengan [CI S01 lulus](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/41015101843). Fixture sintetis lulus capture, resize, stop, restart, dan penutupan sumber. Capture shop, variasi tampilan game, pengenalan hero, serta auto-buy belum tervalidasi. Rincian bukti dan batas ada pada [S01 Capture](docs/S01_CAPTURE.md).
 
 Setiap perubahan kode dikelompokkan menjadi commit yang utuh, diperiksa, lalu didorong ke branch fitur di [tsalis-dev/MCGG-Companion](https://github.com/tsalis-dev/MCGG-Companion). Integrasi ke `main` melalui pull request dan pemeriksaan CI.

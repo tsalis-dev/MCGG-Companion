@@ -104,7 +104,7 @@ Riwayat setup yang sudah dikirim ke GitHub:
 
 Workflow berjalan pada push kode ke `main`, branch `codex/**`, dan pull request. Perubahan Markdown atau skill instruksi saja tidak mengulang build. Verifikasi runtime sintetis dan startup tidak menggantikan uji capture, penerimaan klik, atau pembelian di MCGG asli. Pemeriksaan tampilan visual dan distribusi pada PC bersih masih mengikuti section terkait.
 
-Hasil S01 dicatat terpisah pada [S01 Capture](S01_CAPTURE.md): verifikasi lokal lulus 0 warning/0 error, dua tes Vision lulus, satu tes desktop dilewati pada jalur default, dan tes desktop eksplisit lulus. Kode [`9b9850b`](https://github.com/tsalis-dev/MCGG-Companion/commit/9b9850b431255080a12510ea796377b25323f889) telah dikirim ke branch fitur. Branch S01 belum digabung ke main; hasil CI branch sedang diverifikasi. Bukti CI S00 di atas tidak menggantikannya.
+Hasil S01 dicatat terpisah pada [S01 Capture](S01_CAPTURE.md): verifikasi lokal lulus 0 warning/0 error, dua tes Vision lulus, satu tes desktop dilewati pada jalur default, dan tes desktop eksplisit lulus. Kode [`9b9850b`](https://github.com/tsalis-dev/MCGG-Companion/commit/9b9850b431255080a12510ea796377b25323f889) telah dikirim ke branch fitur. Branch S01 belum digabung ke main. [CI branch S01 lulus](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/41015101843) pada commit 0927875. Bukti tes desktop interaktif lokal dicatat terpisah dari CI.
 
 ## 6. Pemeriksaan masalah awal
 
