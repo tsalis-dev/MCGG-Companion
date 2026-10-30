@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" />
     <ProjectReference Include="..\McggCompanion.Vision\McggCompanion.Vision.csproj" />
+    <ProjectReference Include="..\McggCompanion.Windows\McggCompanion.Windows.csproj" />
   </ItemGroup>
 
 </Project>

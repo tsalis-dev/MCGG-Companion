@@ -40,6 +40,9 @@
           "OpenCvSharp5.Windows": "[5.0.0.20261018, )"
         }
       },
+      "mcggcompanion.windows": {
+        "type": "Project"
+      },
       "OpenCvSharp5.Windows": {
         "type": "CentralTransitive",
         "requested": "[5.0.0.20261018, )",

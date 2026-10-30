@@ -5,39 +5,95 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:McggCompanion.App"
         mc:Ignorable="d"
-        Title="MCGG Companion — Pengembangan"
-        Width="820" Height="560" MinWidth="680" MinHeight="480"
+        Title="MCGG Companion"
+        Width="1100" Height="800" MinWidth="760" MinHeight="620"
         WindowStartupLocation="CenterScreen" Background="#F3F5F8"
         FontFamily="Segoe UI" Language="id-ID">
-    <Grid Margin="32">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="16,9" />
+            <Setter Property="Margin" Value="0,0,10,0" />
+        </Style>
+    </Window.Resources>
+    <Grid Margin="24">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel>
-            <TextBlock Text="MCGG Companion" FontSize="28" FontWeight="SemiBold" Foreground="#162238" />
-            <TextBlock Text="Fondasi pengembangan · S00" Margin="0,6,0,0" Foreground="#56657B" />
-        </StackPanel>
-        <Border Grid.Row="1" Margin="0,24,0,20" Padding="20" Background="White" CornerRadius="10">
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                <Button Content="Pilih jendela" Command="{Binding SelectSourceCommand}"
+                        AutomationProperties.AutomationId="SelectCaptureSource"
+                        AutomationProperties.Name="Pilih jendela untuk pratinjau" />
+                <Button Content="Hentikan" Command="{Binding StopCaptureCommand}" Margin="0"
+                        AutomationProperties.AutomationId="StopCapture" />
+            </StackPanel>
             <StackPanel>
-                <TextBlock Text="Lingkungan pengembangan" FontSize="17" FontWeight="SemiBold" />
-                <TextBlock Text="{Binding FrameworkVersion}" Margin="0,12,0,0" />
-                <TextBlock Text="{Binding SystemDescription}" Margin="0,6,0,0" TextWrapping="Wrap" />
-                <TextBlock Margin="0,12,0,0">
-                    <Run Text="OpenCV: " /><Run Text="{Binding OpenCvVersion, Mode=OneWay}" />
-                </TextBlock>
-                <TextBlock Text="{Binding CaptureSupport}" Margin="0,6,0,0" TextWrapping="Wrap" />
+                <TextBlock Text="MCGG Companion" FontSize="26" FontWeight="SemiBold" Foreground="#162238" />
+                <TextBlock Text="S01 · Pratinjau jendela" Margin="0,4,0,0" Foreground="#56657B" />
+            </StackPanel>
+        </DockPanel>
+        <Border Grid.Row="1" Margin="0,18,0,12" Padding="14,10" Background="White" CornerRadius="8">
+            <StackPanel>
+                <TextBlock Text="{Binding Status}" FontWeight="SemiBold" TextWrapping="Wrap" />
+                <TextBlock Text="{Binding SourceName}" Margin="0,4,0,0" Foreground="#56657B" TextTrimming="CharacterEllipsis" />
             </StackPanel>
         </Border>
-        <StackPanel Grid.Row="2">
-            <TextBlock Text="{Binding Status}" TextWrapping="Wrap" FontSize="14" Foreground="#263C58" />
-            <TextBlock Margin="0,12,0,0" TextWrapping="Wrap" Foreground="#56657B"
-                       Text="Tahap berikutnya: memilih jendela MCGG dan memeriksa gambar shop. Pemeriksaan ini hanya memakai gambar sintetis." />
+        <Border Grid.Row="2" Background="#111827" CornerRadius="8" ClipToBounds="True" MinHeight="180">
+            <Grid>
+                <TextBlock Text="{Binding PreviewHint}" TextWrapping="Wrap" Margin="24" Foreground="#CBD5E1"
+                           VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <Image Source="{Binding Preview}" Stretch="Uniform"
+                       AutomationProperties.Name="Pratinjau sumber capture" />
+            </Grid>
+        </Border>
+        <DockPanel Grid.Row="3" Margin="0,8,0,12">
+            <TextBlock Text="{Binding FrameFreshness}" DockPanel.Dock="Right" Foreground="#56657B" />
+            <TextBlock Text="{Binding FrameDimensions}" Foreground="#56657B" />
+        </DockPanel>
+        <StackPanel Grid.Row="4">
+            <TextBlock Text="Pilih jendela MCGG pada pemilih Windows. Lobby cukup untuk menguji pratinjau."
+                       TextWrapping="Wrap" Foreground="#56657B" Margin="0,0,0,10" />
+            <Expander Header="Detail pengujian dan profil" AutomationProperties.AutomationId="CaptureDiagnostics">
+                <ScrollViewer MaxHeight="250" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="0,12,0,0">
+                        <TextBlock Text="{Binding CaptureDetails}" TextWrapping="Wrap" />
+                        <Grid Margin="0,12,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Margin="0,0,12,0">
+                                <TextBlock Text="Versi game (opsional)" />
+                                <TextBox Text="{Binding GameVersion, UpdateSourceTrigger=PropertyChanged}" Padding="6" Margin="0,4,0,0"
+                                         AutomationProperties.Name="Versi game untuk profil pengujian" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="0,0,12,0">
+                                <TextBlock Text="Mode tampilan" />
+                                <ComboBox ItemsSource="{Binding DisplayModes}" SelectedItem="{Binding DisplayMode}"
+                                          Margin="0,4,0,0" Padding="6" AutomationProperties.Name="Mode tampilan game" />
+                            </StackPanel>
+                            <Button Grid.Column="2" Content="Simpan profil" Command="{Binding SaveProfileCommand}"
+                                    VerticalAlignment="Bottom" Margin="0" AutomationProperties.AutomationId="SaveCaptureProfile" />
+                        </Grid>
+                        <TextBlock Text="{Binding ProfileStatus}" TextWrapping="Wrap" Foreground="#56657B" />
+                        <Separator Margin="0,12" />
+                        <TextBlock Text="{Binding FrameworkVersion}" />
+                        <TextBlock Text="{Binding SystemDescription}" TextWrapping="Wrap" Margin="0,4,0,0" />
+                        <TextBlock Margin="0,4,0,0">
+                            <Run Text="OpenCV: " /><Run Text="{Binding OpenCvVersion, Mode=OneWay}" />
+                        </TextBlock>
+                        <TextBlock Text="{Binding CaptureSupport}" TextWrapping="Wrap" Margin="0,4,0,0" />
+                        <TextBlock Text="{Binding DiagnosticsStatus}" TextWrapping="Wrap" Margin="0,4,0,8" />
+                        <Button Content="Periksa dependensi" Command="{Binding CheckEnvironmentCommand}"
+                                HorizontalAlignment="Left" AutomationProperties.Name="Periksa dependensi pengembangan" />
+                    </StackPanel>
+                </ScrollViewer>
+            </Expander>
         </StackPanel>
-        <Button Grid.Row="3" Content="Periksa dependensi" Command="{Binding CheckEnvironmentCommand}"
-                HorizontalAlignment="Left" Padding="20,10" Margin="0,16,0,0"
-                AutomationProperties.Name="Periksa dependensi pengembangan" />
     </Grid>
 </Window>
