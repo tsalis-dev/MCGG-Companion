@@ -108,7 +108,7 @@ Workflow berjalan pada push kode ke `main`, branch `codex/**`, dan pull request.
 
 Hasil S01 dicatat terpisah pada [S01 Capture](S01_CAPTURE.md): verifikasi lokal lulus 0 warning/0 error, dua tes Vision lulus, satu tes desktop dilewati pada jalur default, dan tes desktop eksplisit lulus. Kode [`9b9850b`](https://github.com/tsalis-dev/MCGG-Companion/commit/9b9850b431255080a12510ea796377b25323f889) telah digabung ke `main` bersama commit CI dan dokumentasinya. [CI branch S01 lulus](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/41015101843) pada commit 0927875. Bukti tes desktop interaktif lokal dicatat terpisah dari CI.
 
-Hasil alat anotasi dan pekerjaan data yang masih terbuka dicatat pada [S02 Kalibrasi](S02_CALIBRATION.md). Pilot dipilih pengguna: Uranus. Penyimpanan data sesi berada di folder data pengguna, dengan manifest kelompok sesi dan PNG/crop/JSON lokal. Lima tes Vision serta uji UI sintetis telah lulus; belum ada klaim kalibrasi shop atau referensi Uranus dari game asli.
+Hasil alat anotasi dan pekerjaan data yang masih terbuka dicatat pada [S02 Kalibrasi](S02_CALIBRATION.md). Pilot dipilih pengguna: Uranus. Penyimpanan data sesi berada di folder data pengguna, dengan manifest kelompok sesi dan PNG/crop/JSON lokal. Lima tes Vision, uji UI sintetis, serta [CI Windows pada commit bffd997](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/41050925300) telah lulus; belum ada klaim kalibrasi shop atau referensi Uranus dari game asli. Branch belum digabung ke `main`; draft PR otomatis ditolak koneksi GitHub (403), sebagaimana dicatat pada dokumen S02.
 
 ## 6. Pemeriksaan masalah awal
 

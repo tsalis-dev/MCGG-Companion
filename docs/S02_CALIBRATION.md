@@ -2,6 +2,8 @@
 
 Tanggal: 30 Oktober 2026. Status: **alat anotasi tersedia; kalibrasi game dan dataset belum tervalidasi**. Hero pilot: **Uranus**, dipilih pengguna. Branch pengerjaan: `codex/s02-calibration-data`.
 
+Implementasi: [`bffd997`](https://github.com/tsalis-dev/MCGG-Companion/commit/bffd9975274dcf3acb0f1948328b361e9e498ce5). [CI Windows S02 lulus](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/41050925300). Branch belum digabung ke `main`. Pembuatan draft PR melalui koneksi GitHub ditolak dengan `403: Resource not accessible by integration`; [perbandingan perubahan](https://github.com/tsalis-dev/MCGG-Companion/compare/main...codex%2Fs02-calibration-data) tersedia untuk peninjauan.
+
 ## 1. Alur tanpa menghentikan pertandingan
 
 Ada dua cara memulai:
@@ -61,6 +63,7 @@ Editor ini menangani gambar tunggal. Pengambilan klip, pemutaran rekaman, pemuat
 | --- | --- |
 | Restore terkunci dan build Release | Lulus, tanpa perubahan dependensi; build 0 warning / 0 error |
 | Tes Vision | 5 lulus: 2 fondasi dan 3 tes kalibrasi |
+| CI Windows | Lulus pada commit bffd997: restore terkunci, build, tes, dan publish; tes desktop tetap dilewati pada jalur default |
 | Pemetaan area | Seretan terbalik, perubahan skala editor, pembatasan tepi, seleksi kosong, NaN, dan overflow diperiksa |
 | Label dan penyimpanan | Nol berbeda dari belum terbaca; harga negatif, slot tidak valid, area keluar gambar, dan ID dengan traversal ditolak; potongan, kunci kelompok, duplikasi, serta revisi diperiksa |
 | Publish x64 | Lulus; tahap publish diulang setelah menutup aplikasi uji yang mengunci paket |

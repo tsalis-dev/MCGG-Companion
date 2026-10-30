@@ -37,4 +37,4 @@ Verifikasi menjalankan restore terkunci, build Release, lima tes Vision, dan pub
 
 Setiap perubahan kode dikelompokkan menjadi commit yang utuh, diperiksa, lalu didorong ke branch fitur di [tsalis-dev/MCGG-Companion](https://github.com/tsalis-dev/MCGG-Companion). Integrasi berikutnya ke `main` melalui pull request dan pemeriksaan CI. S01 digabung secara fast-forward dengan izin eksplisit pengguna pada 30 Oktober 2026 setelah CI branch lulus; seluruh commit pengerjaan dipertahankan.
 
-**S02 berjalan:** alat kalibrasi dan anotasi telah diuji dengan gambar sintetis. Profil shop asli, referensi Uranus, dan indikator hasil belum tervalidasi.
+**S02 berjalan:** alat kalibrasi dan anotasi telah diuji dengan gambar sintetis; [CI S02 lulus](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/41050925300). Perubahan tersedia di branch `codex/s02-calibration-data`, belum digabung ke `main`. Profil shop asli, referensi Uranus, dan indikator hasil belum tervalidasi.
