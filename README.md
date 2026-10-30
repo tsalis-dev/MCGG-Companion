@@ -24,6 +24,6 @@ Verifikasi menjalankan restore terkunci, build Release, dua tes OpenCV, dan publ
 
 ## Status
 
-Fondasi lokal sudah lulus build, pengujian OpenCV, publish x64, dan pemeriksaan startup. CI GitHub sedang disiapkan. Pemilihan jendela dan capture MCGG dikerjakan pada **S01**; pengenalan hero dan auto-buy mengikuti section berikutnya.
+**S00 selesai:** fondasi lokal sudah lulus build, dua pengujian OpenCV, publish x64, dan pemeriksaan startup. [CI GitHub juga lulus](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/40987133392). Pemilihan jendela dan capture MCGG dikerjakan pada **S01**; pengenalan hero dan auto-buy mengikuti section berikutnya.
 
 Setiap perubahan kode dikelompokkan menjadi commit yang utuh, diperiksa, lalu dikirim ke [tsalis-dev/MCGG-Companion](https://github.com/tsalis-dev/MCGG-Companion).

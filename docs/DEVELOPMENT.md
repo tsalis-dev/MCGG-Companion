@@ -48,11 +48,11 @@ Publish menghasilkan folder `artifacts/publish/win-x64`. Build dan publish membu
 
 ## 3. Section pengerjaan
 
-S00 **berjalan**, dengan verifikasi lokal telah lulus. CI GitHub menjadi pemeriksaan terakhir yang masih disiapkan. Capture dan input MCGG asli belum diuji.
+S00 **selesai**, dengan verifikasi lokal serta CI GitHub telah lulus pada 30 Oktober 2026. Capture dan input MCGG asli belum diuji.
 
 | Section | Status | Output | Gate sebelum dinyatakan selesai | Contoh commit logis |
 | --- | --- | --- | --- | --- |
-| S00 — Fondasi | Berjalan | Solution App/Vision/Vision.Tests, dependensi, lockfile, UI awal, script verifikasi, CI, dan skill lokal | Restore terkunci, build Release, pengujian native/gambar, publish x64, dan pembukaan UI awal lulus | `chore: initialize Windows development foundation` |
+| S00 — Fondasi | Selesai | Solution App/Vision/Vision.Tests, dependensi, lockfile, UI awal, script verifikasi, CI, dan skill lokal | Restore terkunci, build Release, pengujian native/gambar, publish x64, dan pembukaan UI awal lulus | `chore: bootstrap Windows development environment and Ponytail skills` |
 | S01 — Probe capture | Belum dimulai | Pemilih jendela, pratinjau gambar MCGG, timestamp, dan profil PC/game | Capture nyata dapat digunakan; resize, penghentian, dan pelepasan sumber daya diuji; jalur input dan bukti hasil memiliki rencana validasi | `feat(capture): preview the selected game window` |
 | S02 — Kalibrasi dan data | Belum dimulai | Area shop, referensi satu hero, label, pemetaan indikator hasil, dan pembagian dataset | Profil koordinat benar; data dipisah per sesi; kondisi yang belum didukung tercatat | `feat(calibration): define the pilot shop profile` |
 | S03 — Deteksi offline | Belum dimulai | Pengenalan target, harga, gold, keadaan tidak terbaca, dan evaluasi | Precision ≥99% dan recall ≥95% pada data uji terpisah; jumlah sampel dan abstain dilaporkan | `feat(vision): detect the pilot hero and shop values` |
@@ -89,7 +89,15 @@ Untuk menutup section, catat tanggal, profil uji, pemeriksaan yang dijalankan, h
 | Pengujian native/gambar | Lulus 2 tes: runtime OpenCV 5/template matching dan PNG roundtrip |
 | Publish self-contained x64 | Lulus, `artifacts/publish/win-x64` |
 | Aplikasi awal dapat dibuka | Lulus pemeriksaan startup tersembunyi: input idle tercapai dan proses tetap hidup; tampilan visual belum ditinjau |
-| CI Windows | Sedang disiapkan |
+| CI Windows | [Lulus pada commit e7cec2d](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/40987133392): restore terkunci, build, pengujian, dan publish |
+
+Riwayat setup yang sudah dikirim ke GitHub:
+
+1. [`04d6b18`](https://github.com/tsalis-dev/MCGG-Companion/commit/04d6b18): PRD dan keputusan teknologi.
+2. [`e229dcc`](https://github.com/tsalis-dev/MCGG-Companion/commit/e229dcc): fondasi kode, dependensi terkunci, skill Ponytail, dan section pengembangan.
+3. [`e7cec2d`](https://github.com/tsalis-dev/MCGG-Companion/commit/e7cec2d): workflow CI Windows; pemeriksaan pertama lulus.
+
+Workflow berjalan pada push kode ke `main` dan pull request. Perubahan Markdown atau skill instruksi saja tidak mengulang build. Verifikasi runtime sintetis dan startup tidak menggantikan uji capture, penerimaan klik, atau pembelian di MCGG asli. Pemeriksaan tampilan visual dan distribusi pada PC bersih masih mengikuti section terkait.
 
 ## 6. Pemeriksaan masalah awal
 
