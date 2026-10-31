@@ -58,7 +58,7 @@ S00 **selesai**, dengan verifikasi lokal serta CI GitHub telah lulus pada 30 Okt
 | --- | --- | --- | --- | --- |
 | S00 — Fondasi | Selesai | Solution App/Vision/Vision.Tests, dependensi, lockfile, UI awal, script verifikasi, CI, dan skill lokal | Restore terkunci, build Release, pengujian native/gambar, publish x64, dan pembukaan UI awal lulus | `chore: bootstrap Windows development environment and Ponytail skills` |
 | S01 — Probe capture | Implementasi + lobby tervalidasi; perluasan profil belum | Pemilih jendela, pratinjau, timestamp, profil metadata lokal, dan fixture desktop | Capture lobby serta kontrol UI lulus; resize/close lulus pada fixture; pengujian shop dan variasi game tetap terbuka sesuai matriks [S01](S01_CAPTURE.md) | `feat(capture): preview Windows sources and validate session lifecycle` |
-| S02 — Kalibrasi dan data | Belum dimulai | Area shop, referensi satu hero, label, pemetaan indikator hasil, dan pembagian dataset | Profil koordinat benar; data dipisah per sesi; kondisi yang belum didukung tercatat | `feat(calibration): define the pilot shop profile` |
+| S02 — Kalibrasi dan data | Berjalan: alat anotasi + data awal dua sesi | Editor, profil piksel video, 46 sampel parsial / 13 frame Uranus; sesi Pengembangan dan Penyesuaian terpisah, belum Uji akhir | Label/profil lengkap; koordinat capture langsung dan indikator hasil/kapasitas tervalidasi; data dipisah per sesi; kondisi yang belum didukung tercatat | `feat(calibration): annotate frozen shop images and group pilot data by session` |
 | S03 — Deteksi offline | Belum dimulai | Pengenalan target, harga, gold, keadaan tidak terbaca, dan evaluasi | Precision ≥99% dan recall ≥95% pada data uji terpisah; jumlah sampel dan abstain dilaporkan | `feat(vision): detect the pilot hero and shop values` |
 | S04 — Mode Pantau | Belum dimulai | UI target/sesi, deteksi langsung, jeda, pintasan berhenti, dan catatan lokal | p95 keputusan ≤250 ms pada profil uji; ≥3 sesi masing-masing ≥20 menit; perubahan fokus/tampilan dan capture putus tertangani | `feat(monitor): observe the live shop` |
 | S05 — Transaksi simulator | Belum dimulai | Shop simulasi, aturan gold/kuota, pengendali transaksi, dan verifikasi hasil | ≥200 skenario transaksi tanpa salah beli; penghentian, konflik, dan hasil ambigu diuji sesuai PRD | `feat(simulator): validate purchase transactions` |
@@ -75,7 +75,7 @@ Pengendali auto-buy pada simulator memakai logika produk yang sama, sedangkan ke
 2. Implementasikan bagian terkecil yang menyelesaikan hasil tersebut, termasuk pemanggil, konfigurasi, dan pengujian yang terdampak.
 3. Jalankan pemeriksaan relevan. Untuk fondasi atau dependensi, jalankan verifikasi lengkap; untuk integrasi game, tambahkan pemeriksaan nyata sesuai gate.
 4. Tinjau diff dan berkas staging. Pastikan tidak ada data akun, rahasia, data mentah pribadi, atau keluaran build.
-5. Commit perubahan logis yang telah diperiksa, lalu push ke branch fitur pada `tsalis-dev/MCGG-Companion`. S01 menggunakan `codex/s01-window-capture`; buka atau perbarui pull request ke `main`.
+5. Commit perubahan logis yang telah diperiksa, lalu push ke branch fitur pada `tsalis-dev/MCGG-Companion`. S02 menggunakan `codex/s02-calibration-data`; buka atau perbarui pull request ke `main`.
 6. Tinjau hasil CI dan review sebelum integrasi PR ke `main`. Jalur pengerjaan saat ini tidak memakai push langsung ke `main`.
 7. Catat bukti dan keterbatasan. Jika pemeriksaan atau push gagal, perbaiki atau laporkan keadaan sebenarnya; jangan menandai section selesai.
 
@@ -107,6 +107,12 @@ Riwayat setup yang sudah dikirim ke GitHub:
 Workflow berjalan pada push kode ke `main`, branch `codex/**`, dan pull request. Perubahan Markdown atau skill instruksi saja tidak mengulang build. Verifikasi runtime sintetis dan startup tidak menggantikan uji capture, penerimaan klik, atau pembelian di MCGG asli. Pemeriksaan tampilan visual dan distribusi pada PC bersih masih mengikuti section terkait.
 
 Hasil S01 dicatat terpisah pada [S01 Capture](S01_CAPTURE.md): verifikasi lokal lulus 0 warning/0 error, dua tes Vision lulus, satu tes desktop dilewati pada jalur default, dan tes desktop eksplisit lulus. Kode [`9b9850b`](https://github.com/tsalis-dev/MCGG-Companion/commit/9b9850b431255080a12510ea796377b25323f889) telah digabung ke `main` bersama commit CI dan dokumentasinya. [CI branch S01 lulus](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/41015101843) pada commit 0927875. Bukti tes desktop interaktif lokal dicatat terpisah dari CI.
+
+Hasil alat anotasi dan pekerjaan data yang masih terbuka dicatat pada [S02 Kalibrasi](S02_CALIBRATION.md). Pilot dipilih pengguna: Uranus. Penyimpanan data sesi berada di folder data pengguna, dengan manifest kelompok sesi dan PNG/crop/JSON lokal. Lima tes Vision, uji UI sintetis, serta [CI Windows pada commit bffd997](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/41050925300) telah lulus. Pengujian alat tersebut tidak menggantikan validasi game langsung. Branch belum digabung ke `main`; draft PR otomatis ditolak koneksi GitHub (403), sebagaimana dicatat pada dokumen S02.
+
+Pada 1 November 2026, [rekaman gameplay pertama](S02_RECORDING_REVIEW.md) menghasilkan kalibrasi awal: 21 sampel lokal, 5 frame Uranus pada 3 posisi slot, dan kandidat rangkaian hasil manual. Pemeriksaan 21 PNG dan 205 potongan lulus. Versi game, DPI, pemetaan capture langsung, aturan transaksi, dan evaluasi dari sesi terpisah tetap terbuka; data mentah tidak dikirim ke GitHub.
+
+[Rekaman kedua](S02_RECORDING_2_REVIEW.md) menambah 25 sampel Penyesuaian, 8 frame positif / 9 posisi target. Pemeriksaan byte/hash 25 PNG dan 268 potongan lulus; sesi pertama tetap Pengembangan. Gabungan contoh mencakup semua slot, target ganda, popup kapasitas, dan Uranus papan di belakang shop. Eksperimen offline S03 dapat dimulai; status implementasinya tetap belum dimulai dan evaluasi akhir menunggu sesi baru.
 
 ## 6. Pemeriksaan masalah awal
 

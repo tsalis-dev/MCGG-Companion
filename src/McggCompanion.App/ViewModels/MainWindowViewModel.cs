@@ -24,6 +24,8 @@ public partial class MainWindowViewModel : ObservableObject, IAsyncDisposable
     private DateTimeOffset startedAtUtc;
     private long startedAtTimestamp;
     private bool disposed;
+    private CalibrationWindow? calibrationWindow;
+    private readonly string calibrationSessionId = $"sesi-{DateTimeOffset.UtcNow:yyyyMMdd-HHmmss}-{Guid.NewGuid():N}";
 
     public MainWindowViewModel(nint ownerHandle)
     {
@@ -66,11 +68,11 @@ public partial class MainWindowViewModel : ObservableObject, IAsyncDisposable
     private string profileStatus = "Profil menyimpan metadata pengujian lokal, tanpa gambar.";
 
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(SelectSourceCommand), nameof(StopCaptureCommand), nameof(SaveProfileCommand))]
+    [NotifyCanExecuteChangedFor(nameof(SelectSourceCommand), nameof(StopCaptureCommand), nameof(SaveProfileCommand), nameof(FreezeForCalibrationCommand), nameof(OpenCalibrationImageCommand))]
     private bool isBusy;
 
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(StopCaptureCommand), nameof(SaveProfileCommand))]
+    [NotifyCanExecuteChangedFor(nameof(StopCaptureCommand), nameof(SaveProfileCommand), nameof(FreezeForCalibrationCommand))]
     private bool isCapturing;
 
     [ObservableProperty]
@@ -93,6 +95,50 @@ public partial class MainWindowViewModel : ObservableObject, IAsyncDisposable
     private bool CanStopCapture() => !disposed && !IsBusy && IsCapturing;
 
     private bool CanSaveProfile() => !disposed && !IsBusy && IsCapturing && lastFrame is not null;
+
+    private bool CanFreezeForCalibration() => CanSaveProfile();
+
+    [RelayCommand(CanExecute = nameof(CanFreezeForCalibration))]
+    private void FreezeForCalibration()
+    {
+        if (lastFrame is not { } frame)
+        {
+            return;
+        }
+        var age = Stopwatch.GetElapsedTime(frame.ReceivedStopwatchTimestamp);
+        if (age > TimeSpan.FromSeconds(2))
+        {
+            Status = "Gambar belum diperbarui. Tunggu gambar baru sebelum mengambil cuplikan kalibrasi.";
+            return;
+        }
+        var bitmap = BitmapSource.Create(frame.Width, frame.Height, 96, 96, PixelFormats.Pbgra32, null, frame.BgraPixels, frame.Stride);
+        bitmap.Freeze();
+        GetCalibrationWindow().SetImage(bitmap, "Capture", DateTimeOffset.UtcNow - age, frame.SequenceNumber, age.TotalMilliseconds);
+    }
+
+    [RelayCommand(CanExecute = nameof(CanSelectSource))]
+    private void OpenCalibrationImage() => GetCalibrationWindow().OpenImage();
+
+    private CalibrationWindow GetCalibrationWindow()
+    {
+        if (calibrationWindow is null)
+        {
+            calibrationWindow = new CalibrationWindow(calibrationSessionId, GameVersion, DisplayMode)
+            {
+                Owner = Application.Current.MainWindow
+            };
+            calibrationWindow.Closed += (_, _) => calibrationWindow = null;
+            calibrationWindow.Show();
+        }
+        calibrationWindow.Activate();
+        return calibrationWindow;
+    }
+
+    public bool TryCloseCalibration()
+    {
+        calibrationWindow?.Close();
+        return calibrationWindow is null;
+    }
 
     [RelayCommand(CanExecute = nameof(CanSelectSource))]
     private async Task SelectSourceAsync()
@@ -192,6 +238,7 @@ public partial class MainWindowViewModel : ObservableObject, IAsyncDisposable
         FrameDimensions = "Belum ada gambar";
         FrameFreshness = "";
         SaveProfileCommand.NotifyCanExecuteChanged();
+        FreezeForCalibrationCommand.NotifyCanExecuteChanged();
 
         if (previous is not null)
         {
@@ -241,6 +288,7 @@ public partial class MainWindowViewModel : ObservableObject, IAsyncDisposable
                 if (firstFrame)
                 {
                     SaveProfileCommand.NotifyCanExecuteChanged();
+                    FreezeForCalibrationCommand.NotifyCanExecuteChanged();
                 }
             }
 

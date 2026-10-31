@@ -20,7 +20,7 @@ Pilihan teknologi tidak berarti seluruh konfigurasi MCGG didukung. [S01](S01_CAP
 | OCR umum | Kandidat tambahan jika baseline angka gagal | Opsional | Pilih mesin setelah membandingkan akurasi, latency, dan kebutuhan distribusinya |
 | Pengiriman klik | Win32 SendInput melalui interop C# | Pilihan awal; perlu uji integrasi | Validasi koordinat, fokus, penerimaan input, dan hasil di game |
 | Pintasan berhenti | Win32 RegisterHotKey | Pilihan awal; perlu uji konflik | Harus dapat menjeda saat game fokus; tampilkan konflik pendaftaran pintasan |
-| Pengaturan dan profil | JSON dengan System.Text.Json | S01: profil metadata lokal tersedia | Target, batas pembelian, dan referensi kalibrasi mengikuti section berikutnya |
+| Pengaturan dan profil | JSON dengan System.Text.Json | S01: metadata capture; S02: manifest sesi, area dan label manual dari rekaman | Profil video awal dan 5 referensi Uranus tersedia; pemetaan capture langsung dan aturan pembelian belum tervalidasi |
 | Catatan transaksi | JSON Lines / JSONL | Ditetapkan | Satu kejadian per baris untuk evaluasi serta pemeriksaan hasil |
 | Data gambar | PNG untuk referensi dan screenshot berlabel | Ditetapkan | Bukti visual dan pengujian detektor yang dapat diulang |
 | Pengujian logika | xUnit, rilis stabil | Ditetapkan | Uji aturan gold, kuota, keadaan transaksi, pembatalan, dan timeout |
@@ -47,7 +47,7 @@ Kebutuhan awal mencakup pemotongan area shop, pengolahan warna, pencocokan gamba
 
 Dokumentasi pengelola saat ini merekomendasikan keluarga OpenCvSharp5 untuk proyek baru. **OpenCvSharp5.Windows 5.0.0.20261018** telah diunduh, dikunci, dan lulus uji pemuatan runtime, pencocokan gambar sintetis, PNG roundtrip, serta publish x64. Paket managed, runtime native, namespace, dan contoh API harus berasal dari keluarga yang sama.
 
-Hero pilot dan metode pengenalannya ditentukan dari screenshot nyata. Pencocokan gambar adalah baseline; model machine learning hanya ditambahkan bila evaluasi menunjukkan kebutuhan yang jelas.
+Hero pilot adalah Uranus. [Review rekaman pertama](S02_RECORDING_REVIEW.md) menyediakan 5 referensi Pengembangan dari 4 kejadian shop. [Rekaman kedua](S02_RECORDING_2_REVIEW.md) menyediakan 8 frame positif untuk Penyesuaian, termasuk target ganda; gabungan posisi mencakup kelima slot. Referensi Pengembangan tetap terpisah dari Penyesuaian, dan belum ada sesi Uji akhir. Metode pengenalan dipilih melalui evaluasi S03. Pencocokan gambar adalah baseline; model machine learning hanya ditambahkan bila evaluasi menunjukkan kebutuhan yang jelas.
 
 ### Pembacaan angka
 
@@ -108,9 +108,9 @@ Penyimpanan MVP memakai JSON dan JSONL. Database, layanan web, dan sinkronisasi 
 
 ## 6. Pekerjaan setelah probe capture
 
-1. Lengkapi versi game dan profil shop pada S02; lobby belum membuktikan keterbacaan hero, harga, atau gold.
+1. Lengkapi versi game, DPI, dan pemetaan profil shop dari rekaman ke capture langsung pada S02; referensi awal video tidak otomatis cocok dengan geometri capture S01.
 2. Perluas pengujian game untuk resize, minimize/restore, DPI, mode layar, dan HDR sesuai daftar dukungan yang ingin ditawarkan.
-3. Kumpulkan data untuk hero pilot dan ukur deteksi offline pada S03.
+3. Perluas data Uranus dari sesi terpisah dan ukur deteksi offline pada S03. Rekaman pertama tetap masuk satu sesi Pengembangan.
 4. Petakan indikator keberhasilan pembelian dari tampilan shop. Rencanakan SendInput pada S06 setelah transaksi simulator lulus, dengan pemeriksaan foreground, DPI, dan gambar terbaru.
 
 Metrik awal dan batas interpretasinya tersedia pada [S01 Capture](S01_CAPTURE.md). Belum ada pengiriman klik pembelian atau validasi transaksi game.

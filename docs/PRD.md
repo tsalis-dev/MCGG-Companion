@@ -8,7 +8,7 @@
 | Platform target | Aplikasi MCGG versi Windows pada PC pengguna |
 | Tujuan proyek | Eksperimen pribadi dan portofolio pengembangan aplikasi pendamping game |
 | Fitur utama | Mendeteksi satu hero target di shop dan membelinya otomatis ketika syarat terpenuhi |
-| Status implementasi | S01: pratinjau lobby MCGG Windows tervalidasi pada satu profil; deteksi hero, input, dan pembelian belum diimplementasikan |
+| Status implementasi | S01: lobby tervalidasi pada satu profil. S02: alat anotasi dan 46 sampel parsial dari dua sesi, termasuk 13 frame Uranus pada kelima slot; Pengembangan/Penyesuaian terpisah, belum Uji akhir. Pemetaan capture langsung, deteksi, input, dan pembelian belum tervalidasi |
 
 ## 1. Ringkasan produk
 

@@ -17,6 +17,7 @@ captures/
 recordings/
 logs/
 *.dmp
+*.mp4
 
 # Credentials and machine-specific settings
 .env
