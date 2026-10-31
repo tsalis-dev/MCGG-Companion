@@ -1,6 +1,8 @@
 # S02 — Kalibrasi dan data Uranus
 
-Tanggal: 30 Oktober 2026. Status: **alat anotasi tersedia; kalibrasi game dan dataset belum tervalidasi**. Hero pilot: **Uranus**, dipilih pengguna. Branch pengerjaan: `codex/s02-calibration-data`.
+Tanggal awal: 30 Oktober 2026. Pembaruan: 1 November 2026. Status: **alat anotasi dan kalibrasi awal satu rekaman tersedia; profil langsung dan dataset evaluasi belum tervalidasi**. Hero pilot: **Uranus**, dipilih pengguna. Branch pengerjaan: `codex/s02-calibration-data`.
+
+Rekaman gameplay pertama telah dianalisis secara lokal: 21 screenshot pilihan, 5 frame Uranus pada slot 2/3/5 dari 4 kejadian shop, dan profil area awal tersimpan. [Laporan rekaman S02](S02_RECORDING_REVIEW.md) mencatat waktu, konteks, pemeriksaan, serta batasnya. Seluruh frame memakai satu sesi Pengembangan. Data mentah tetap lokal.
 
 Implementasi: [`bffd997`](https://github.com/tsalis-dev/MCGG-Companion/commit/bffd9975274dcf3acb0f1948328b361e9e498ce5). [CI Windows S02 lulus](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/41050925300). Branch belum digabung ke `main`. Pembuatan draft PR melalui koneksi GitHub ditolak dengan `403: Resource not accessible by integration`; [perbandingan perubahan](https://github.com/tsalis-dev/MCGG-Companion/compare/main...codex%2Fs02-calibration-data) tersedia untuk peninjauan.
 
@@ -70,7 +72,8 @@ Editor ini menangani gambar tunggal. Pengambilan klip, pemutaran rekaman, pemuat
 | UI sintetis | Impor PNG 960 × 540, seret area, peringatan anotasi belum disimpan, dan penyimpanan PNG/potongan/JSON berhasil diperiksa |
 | Tes capture desktop | Dilewati pada jalur default; tidak diulang untuk perubahan S02 ini |
 | Bekukan dari capture langsung | Tersambung ke frame S01; alur tombol belum diuji langsung pada shop MCGG |
-| Shop asli, referensi Uranus, dan indikator hasil | Belum terkumpul atau tervalidasi |
+| Shop dari rekaman dan referensi Uranus | Kalibrasi awal 21 screenshot dan 5 referensi lokal; pemetaan capture langsung belum tervalidasi |
+| Indikator hasil | Kandidat rangkaian manual dan kondisi penggabungan ditemukan; aturan konfirmasi belum tervalidasi |
 | Deteksi / input / pembelian | Belum diimplementasikan oleh S02 |
 
-S02 belum selesai. Gate berikutnya adalah profil shop nyata, referensi Uranus berlabel, pemetaan kandidat bukti transaksi dari rangkaian gambar, pembagian sesi, dan pencatatan kondisi yang belum didukung. Keberhasilan alat anotasi tidak membuktikan deteksi atau auto-buy.
+S02 belum selesai. Referensi awal dari satu rekaman tersedia. Gate berikutnya adalah melengkapi label/profil, memetakan koordinat ke capture langsung, memvalidasi indikator hasil dan kapasitas, serta memperluas data dari sesi terpisah. Keberhasilan alat anotasi atau review rekaman tidak membuktikan deteksi atau auto-buy.
