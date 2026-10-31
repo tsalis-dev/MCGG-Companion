@@ -10,6 +10,7 @@ Proyek eksperimen dan portofolio aplikasi pendamping MCGG versi Windows. MVP dit
 - [Hasil dan batas pengujian capture S01](docs/S01_CAPTURE.md)
 - [Kalibrasi dan pengumpulan data Uranus S02](docs/S02_CALIBRATION.md)
 - [Tinjauan rekaman gameplay pertama](docs/S02_RECORDING_REVIEW.md)
+- [Tinjauan rekaman kedua dan kesiapan baseline S03](docs/S02_RECORDING_2_REVIEW.md)
 - [Skill Ponytail dan sumbernya](docs/THIRD_PARTY_SKILLS.md)
 
 Fondasi: C# / .NET 10, WPF + MVVM, OpenCvSharp, dan Windows Graphics Capture. Integrasi input serta pembelian mengikuti tahap berikutnya.
@@ -38,4 +39,4 @@ Verifikasi menjalankan restore terkunci, build Release, lima tes Vision, dan pub
 
 Setiap perubahan kode dikelompokkan menjadi commit yang utuh, diperiksa, lalu didorong ke branch fitur di [tsalis-dev/MCGG-Companion](https://github.com/tsalis-dev/MCGG-Companion). Integrasi berikutnya ke `main` melalui pull request dan pemeriksaan CI. S01 digabung secara fast-forward dengan izin eksplisit pengguna pada 30 Oktober 2026 setelah CI branch lulus; seluruh commit pengerjaan dipertahankan.
 
-**S02 berjalan:** alat kalibrasi dan anotasi telah diuji dengan gambar sintetis; [CI S02 lulus](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/41050925300). Satu rekaman gameplay telah ditinjau: 21 screenshot dan 5 referensi Uranus tersimpan lokal. Profil capture langsung, aturan hasil, dan dataset evaluasi belum tervalidasi. Perubahan tersedia di branch `codex/s02-calibration-data`, belum digabung ke `main`.
+**S02 berjalan:** alat kalibrasi dan anotasi telah diuji dengan gambar sintetis; [CI S02 lulus](https://github.com/tsalis-dev/MCGG-Companion/actions/runs/41050925300). Dua rekaman telah ditinjau: 46 sampel parsial dengan 13 frame Uranus, mencakup kelima slot. Sesi Pengembangan dan Penyesuaian terpisah; belum ada sesi Uji akhir. Eksperimen offline S03 dapat dimulai, sementara profil capture langsung, aturan hasil, dan dataset evaluasi belum tervalidasi. Perubahan tersedia di branch `codex/s02-calibration-data`, belum digabung ke `main`.

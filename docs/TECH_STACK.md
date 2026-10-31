@@ -47,7 +47,7 @@ Kebutuhan awal mencakup pemotongan area shop, pengolahan warna, pencocokan gamba
 
 Dokumentasi pengelola saat ini merekomendasikan keluarga OpenCvSharp5 untuk proyek baru. **OpenCvSharp5.Windows 5.0.0.20261018** telah diunduh, dikunci, dan lulus uji pemuatan runtime, pencocokan gambar sintetis, PNG roundtrip, serta publish x64. Paket managed, runtime native, namespace, dan contoh API harus berasal dari keluarga yang sama.
 
-Hero pilot adalah Uranus. [Review rekaman pertama](S02_RECORDING_REVIEW.md) menyediakan 5 referensi awal dari 4 kejadian shop, dengan pose dan posisi berbeda. Metode pengenalan dipilih melalui evaluasi S03. Pencocokan gambar adalah baseline; model machine learning hanya ditambahkan bila evaluasi menunjukkan kebutuhan yang jelas.
+Hero pilot adalah Uranus. [Review rekaman pertama](S02_RECORDING_REVIEW.md) menyediakan 5 referensi Pengembangan dari 4 kejadian shop. [Rekaman kedua](S02_RECORDING_2_REVIEW.md) menyediakan 8 frame positif untuk Penyesuaian, termasuk target ganda; gabungan posisi mencakup kelima slot. Referensi Pengembangan tetap terpisah dari Penyesuaian, dan belum ada sesi Uji akhir. Metode pengenalan dipilih melalui evaluasi S03. Pencocokan gambar adalah baseline; model machine learning hanya ditambahkan bila evaluasi menunjukkan kebutuhan yang jelas.
 
 ### Pembacaan angka
 
